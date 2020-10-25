@@ -6,7 +6,7 @@ import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shopping/shopping.component';
 import LoginEtInscription from './pages/login-et-inscription/login-et-inscription.component'
 import Header from './components/header/header.component';
-import { auth } from './firebase/firebase.utils'
+import { auth , creerUserProfilDocument } from './firebase/firebase.utils'
 
 class App extends React.Component {
 
@@ -26,13 +26,47 @@ class App extends React.Component {
 
   componentDidMount() {
 
-    this.deconnexionDeAuth = auth.onAuthStateChanged(user => {
+    this.deconnexionDeAuth = auth.onAuthStateChanged(async userAuth => {
 
-      this.setState({ currentUser : user })
+      if (userAuth) {
 
-    })
+        const userRef = await creerUserProfilDocument(userAuth)
 
-  }
+
+
+        userRef.onSnapshot(capture => {
+
+          this.setState({
+
+            currentUser: {
+
+              id: capture.id,
+
+              ...capture.data()
+
+            }
+
+          }, () => {
+
+              console.log(this.state)
+
+          }
+
+        )
+
+        })
+
+      } else {
+
+        this.setState( { currentUser: userAuth})
+
+      }
+
+        })
+
+      } 
+
+
 
   componentWillUnmount() {
 

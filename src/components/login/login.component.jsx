@@ -92,7 +92,7 @@ class Login extends React.Component {
 
         <div className='bouttons'>
           <BoutonCustom type="submit">Connecter</BoutonCustom>
-                <BoutonCustom onClick={loginAvecGoogle} isGoogleLogin>Connecter avec Google</BoutonCustom>
+                <BoutonCustom onClick={loginAvecGoogle} isGoogleLogin>Connection Google</BoutonCustom>
         
         </div>
         </form>
